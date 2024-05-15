@@ -1,0 +1,49 @@
+---
+ahoyapi: v2
+
+commands:
+  build:
+    description: "Build the Docker containers"
+    usage: "ahoy build"
+    cmd: >
+      docker compose build"$@"
+
+  up:
+    description: "Start the Docker containers"
+    usage: "ahoy build"
+    cmd: >
+      docker compose up -d "$@"
+
+  down:
+    description: "Stop the Docker containers"
+    usage: "ahoy stop"
+    cmd: >
+      docker compose down
+
+  restart:
+    description: "Restart Docker containers."
+    usage: "ahoy restart"
+    cmd: docker compose restart
+
+  cli:
+    description: "Start a shell."
+    usage: "ahoy cli"
+    cmd: docker compose exec drupal bash
+
+  logs:
+    description: "View logs from the Docker containers"
+    usage: "ahoy logs"
+    cmd: >
+      docker compose logs -f
+
+  status:
+    description: "Show the status of the Docker containers"
+    usage: "ahoy status"
+    cmd: >
+      docker compose ps
+
+  drush:
+    description: "Run drush commands inside the Drupal container"
+    usage: "ahoy drush [command]"
+    cmd: >
+      docker compose exec drupal drush ${@}

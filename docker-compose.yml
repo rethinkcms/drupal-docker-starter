@@ -1,0 +1,58 @@
+services:
+  traefik:
+    image: traefik:latest
+    depends_on:
+      - drupal
+      - db
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - web
+      - internal
+
+  drupal:
+    build: .
+    depends_on:
+      - db
+    volumes:
+      - /var/www/html/sites
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.drupal.rule=Host(`drupal.localhost`)"
+      - "traefik.http.services.drupal.loadbalancer.server.port=80"
+    environment:
+      DRUPAL_DB_HOST: db
+      DRUPAL_DB_USER: drupal
+      DRUPAL_DB_PASSWORD: drupal
+      DRUPAL_DB_NAME: drupal
+    ports:
+      - "0:80"
+    networks:
+      - web
+      - internal
+
+  db:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: drupal
+      MYSQL_USER: drupal
+      MYSQL_PASSWORD: drupal
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - internal
+
+volumes:
+  db_data:
+
+networks:
+  web:
+  internal:

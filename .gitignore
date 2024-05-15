@@ -1,0 +1,9 @@
+# Ignore the app folder
+app/
+
+# Ignore other common files and directories
+node_modules/
+vendor/
+.env
+.DS_Store
+*.log
