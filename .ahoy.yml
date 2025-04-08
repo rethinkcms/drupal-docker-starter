@@ -6,7 +6,7 @@ commands:
     description: "Build the Docker containers"
     usage: "ahoy build"
     cmd: >
-      docker compose build"$@"
+      docker compose build "$@"
 
   up:
     description: "Start the Docker containers"
@@ -18,7 +18,7 @@ commands:
     description: "Stop the Docker containers"
     usage: "ahoy stop"
     cmd: >
-      docker compose down
+      docker compose down -v
 
   restart:
     description: "Restart Docker containers."
