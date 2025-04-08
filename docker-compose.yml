@@ -39,7 +39,7 @@ services:
       - internal
 
   db:
-    image: mariadb:latest
+    image: mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: drupal
